@@ -11,16 +11,30 @@ const calculate = async (operator, firstNum, secondNum) => {
     }
 }
 
+const calc = async (operator, firstNum, secondNum) => {
+    try {
+        const body = {
+            operator: operator,
+            firstNum: firstNum,
+            secondNum: secondNum
+        }
+        const response = await axios.post(`http://localhost:8099/calc`, body);
+        return response.data;
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 const main = async () => {
     try {
         while(1) {
             const firstNum = prompt('Enter first number:');
             const secondNum = prompt('Enter second number:');
             const operator = prompt('Enter operator:');
-            const result = await calculate(operator, firstNum, secondNum);
+            const result = await calc(operator, firstNum, secondNum);
             console.log(result);
             const ctn = prompt('Continue (y|n):');
-            if (ctn == "n") {
+            if (ctn != "y") {
                 break;
             }
         }
